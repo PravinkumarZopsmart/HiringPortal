@@ -2,6 +2,7 @@ package com.automate_hiring_port;
 
 import com.automate_hiring_port.base.BaseClass;
 import com.automate_hiring_port.pages.Application;
+import com.automate_hiring_port.pages.Dashboard;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import static org.testng.Assert.*;
@@ -41,5 +42,13 @@ public class TestApplication {
     public void testPageHeading() {
         BaseClass.selectSideBarPage(driver,"applications");
         assertEquals(Application.getPageHeading(driver),"Applications");
+    }
+
+    @Test(dependsOnMethods = {"testPageHeading"})
+    public void testApplicationsAndDashboard() {
+        int expectedNumberOfApplications = Application.getNumberOfApplications(driver);
+        BaseClass.selectSideBarPage(driver,"Dashboard");
+        int actualNumberOfApplications = Dashboard.getNumberOfApplications(driver);
+        assertEquals(actualNumberOfApplications,expectedNumberOfApplications);
     }
 }
