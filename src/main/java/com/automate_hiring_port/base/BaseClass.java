@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseClass {
-    private static final By loginButtonLocator = By.cssSelector("#root > div > main > div.login-container > div > button");
+    private static final By loginButtonLocator = By.cssSelector("#root > div > main > div:nth-child(2) > div > div > button");
     private static final By emailInputLocator = By.id("identifierId");
     private static final By passwordInputLocator = By.cssSelector("#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input");
     private static final By passwordButtonLocator = By.cssSelector("#passwordNext > div > button > span");
