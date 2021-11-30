@@ -14,6 +14,8 @@ public class Application extends BaseClass {
     private static final By tableContentsLocator = By.cssSelector(".MuiTableBody-root tr");
     private static final By nextPageButtonLocator = By.cssSelector(".MuiTablePagination-actions button:nth-child(2)");
     private static final By previousPageButtonLocator = By.cssSelector("MuiTablePagination-actions button:nth-child(1)");
+    private static final By numberOfApplications = By.cssSelector("MuiToolbar-root" +
+            ".MuiToolbar-regular.MuiTablePagination-toolbar.MuiToolbar-gutters p");
 
     public static String getPageHeading(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
@@ -21,7 +23,7 @@ public class Application extends BaseClass {
         return driver.findElement(pageHeadingLocator).getText();
     }
 
-    public static int getNumberOfApplications(WebDriver driver) {
+    public static int getNumberOfApplicationsInCurrentPage(WebDriver driver) {
         try {
             WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(tableContentsLocator));
@@ -44,5 +46,13 @@ public class Application extends BaseClass {
         if(previousPageButton.isEnabled()){
             previousPageButton.click();
         }
+    }
+
+    public static int getNumberOfApplications(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(numberOfApplications));
+        String applicationsCount = driver.findElement(numberOfApplications).getText();
+        String[] countArray = applicationsCount.split(" ");
+        return Integer.parseInt(countArray[2]);
     }
 }
