@@ -8,13 +8,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Arrays;
 
 public class Application extends BaseClass {
-    private static final By pageHeadingLocator =By.cssSelector(".head-text-applications-list");
+    private static final By pageHeadingLocator = By.cssSelector(".head-text-applications-list");
     private static final By tableContentsLocator = By.cssSelector(".MuiTableBody-root tr");
     private static final By nextPageButtonLocator = By.cssSelector(".MuiTablePagination-actions button:nth-child(2)");
     private static final By previousPageButtonLocator = By.cssSelector("MuiTablePagination-actions button:nth-child(1)");
-    private static final By numberOfApplications = By.cssSelector("MuiToolbar-root" +
+    private static final By numberOfApplications = By.cssSelector(".MuiToolbar-root" +
             ".MuiToolbar-regular.MuiTablePagination-toolbar.MuiToolbar-gutters p");
 
     public static String getPageHeading(WebDriver driver) {
@@ -25,7 +26,7 @@ public class Application extends BaseClass {
 
     public static int getNumberOfApplicationsInCurrentPage(WebDriver driver) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(tableContentsLocator));
             return driver.findElements(tableContentsLocator).size();
         } catch (Exception e) {
@@ -36,23 +37,27 @@ public class Application extends BaseClass {
 
     public static void moveToNextPage(WebDriver driver) {
         WebElement nextPageButton = driver.findElement(nextPageButtonLocator);
-        if(nextPageButton.isEnabled()) {
+        if (nextPageButton.isEnabled()) {
             nextPageButton.click();
         }
     }
 
-    public static void moveToPreviousPage(WebDriver driver){
+    public static void moveToPreviousPage(WebDriver driver) {
         WebElement previousPageButton = driver.findElement(previousPageButtonLocator);
-        if(previousPageButton.isEnabled()){
+        if (previousPageButton.isEnabled()) {
             previousPageButton.click();
         }
     }
 
     public static int getNumberOfApplications(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(numberOfApplications));
-        String applicationsCount = driver.findElement(numberOfApplications).getText();
-        String[] countArray = applicationsCount.split(" ");
-        return Integer.parseInt(countArray[2]);
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(tableContentsLocator));
+            String applicationsCount = driver.findElement(numberOfApplications).getText();
+            String[] countArray = applicationsCount.split(" ");
+            return Integer.parseInt(countArray[2]);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }
