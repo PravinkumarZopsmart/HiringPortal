@@ -11,7 +11,7 @@ import java.time.Duration;
 public class Dashboard {
     private static final int waitSeconds = 5;
     private static final By numberOfApplications = By.cssSelector(".number-of-total-candidates-text");
-    private static final By resumeScreeningCount = By.className("MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle");
+    private static final By resumeScreeningCount = By.cssSelector(".MuiBadge-badge.MuiBadge-anchorOriginTopRightRectangle");
 
     public static int getNumberOfApplications(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(waitSeconds));
@@ -28,6 +28,5 @@ public class Dashboard {
         } catch (Exception e) {
             return 0;
         }
-
     }
 }
