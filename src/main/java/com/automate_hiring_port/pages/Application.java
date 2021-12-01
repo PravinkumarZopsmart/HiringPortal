@@ -36,6 +36,8 @@ public class Application extends BaseClass {
     }
 
     public static boolean moveToNextPage(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nextPageButtonLocator));
         WebElement nextPageButton = driver.findElement(nextPageButtonLocator);
         if (nextPageButton.isEnabled()) {
             nextPageButton.click();
@@ -45,6 +47,8 @@ public class Application extends BaseClass {
     }
 
     public static boolean moveToPreviousPage(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(previousPageButtonLocator));
         WebElement previousPageButton = driver.findElement(previousPageButtonLocator);
         if (previousPageButton.isEnabled()) {
             previousPageButton.click();
