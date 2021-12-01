@@ -15,8 +15,8 @@ import java.time.Duration;
 public class TestApplication {
 
     private WebDriver driver;
-    private final String emailID = "pravin.kumar@zopsmart.com";
-    private final String password = "Godofwar@25";
+    private final String EMAIL_ID = "pravin.kumar@zopsmart.com";
+    private final String PASSWORD = "Godofwar@25";
     private final String URL = "https://stage.hiringmotion.com/login";
 
     @BeforeSuite
@@ -30,7 +30,7 @@ public class TestApplication {
     @BeforeClass
     public void login() throws InterruptedException {
         driver.get(URL);
-        BaseClass.loginToHiringMotion(driver,emailID,password);
+        BaseClass.loginToHiringMotion(driver, EMAIL_ID, PASSWORD);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class TestApplication {
 
     @Test(dependsOnMethods = {"testTitle"})
     public void testPageHeading() {
-        BaseClass.selectSideBarPage(driver,"applications");
+        BaseClass.selectSideBarPage(driver,"Applications");
         assertEquals(Application.getPageHeading(driver),"Applications");
     }
 
@@ -50,5 +50,14 @@ public class TestApplication {
         BaseClass.selectSideBarPage(driver,"Dashboard");
         int actualNumberOfApplications = Dashboard.getNumberOfApplications(driver);
         assertEquals(actualNumberOfApplications,expectedNumberOfApplications);
+    }
+
+    @Test(dependsOnMethods = {"testApplicationsAndDashboard"})
+    public void testApplicationsPerPage() {
+        BaseClass.selectSideBarPage(driver,"Applications");
+        do {
+            int actualApplicationsPerPage = Application.getNumberOfApplicationsInCurrentPage(driver);
+            assertTrue(actualApplicationsPerPage <= 10);
+        } while (Application.moveToNextPage(driver));
     }
 }
