@@ -35,18 +35,22 @@ public class Application extends BaseClass {
         }
     }
 
-    public static void moveToNextPage(WebDriver driver) {
+    public static boolean moveToNextPage(WebDriver driver) {
         WebElement nextPageButton = driver.findElement(nextPageButtonLocator);
         if (nextPageButton.isEnabled()) {
             nextPageButton.click();
+            return true;
         }
+        return false;
     }
 
-    public static void moveToPreviousPage(WebDriver driver) {
+    public static boolean moveToPreviousPage(WebDriver driver) {
         WebElement previousPageButton = driver.findElement(previousPageButtonLocator);
         if (previousPageButton.isEnabled()) {
             previousPageButton.click();
+            return true;
         }
+        return false;
     }
 
     public static int getNumberOfApplications(WebDriver driver) {
